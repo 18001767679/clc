@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>Level 1</title>
+		<script src="/game.js"></script>
+    </head>
+    <body>
+        <div id="game"></div>
+    </body>
+ 
+    <script>
+        var game=new Game(document.getElementById("game"));
+		game.originalCode="//Welcome to clc!Hit the Run button and see the hero run!\nhero.moveRight(10);";
+        game.addGoal("Go to the red X");
+		game.spawnXY("red-cross",50,60);
+		game.spawnPlayer(50,50);
+		game.player.moveRight=function(steps){
+			this.moveXY(this.pos.x+steps,this.pos.y);
+		}
+    </script>
+</html>
