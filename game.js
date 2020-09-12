@@ -123,6 +123,12 @@ var Game=function(ele){
 	this.spawnPlayer=function(x,y){
 		this.player=this.player||new (this.entity)(new (this.Vec)(x,y,0),new (this.Vec)(0,0,0),10,"/assets/hero.png");
 		this.player.id="Hero";
+		return this.player;
+	};
+	this.spawnXY=function(img,x,y){
+		let a=new (this.entity)(new (this.Vec)(x,y,0),new (this.Vec)(0,0,0),10,"/assets/"+img+".png");
+		this.entities.push(a);
+		return a;
 	};
 }
 document.body.innerHTML+=`<script src="/physics.js"></script>`
