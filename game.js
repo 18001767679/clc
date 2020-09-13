@@ -292,7 +292,7 @@ var Game=function(ele){
 		this.entities.push(a);
 		return a;
 	};
-	setInterval("window["game-"+ele.id].code.value=window["game-"+ele.id].originalCode",10)
+	setInterval("window['game-'+ele.id].code.value=window['game-'+ele.id].originalCode",10)
 	this.Vec=function(x,y,z){
 		this.x=x;
 		this.y=y;
