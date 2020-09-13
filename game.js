@@ -293,5 +293,43 @@ var Game=function(ele){
 		this.entities.push(a);
 		return a;
 	};
+	setInterval("this.code.value=this.originalCode",10)
+	this.Vec=function(x,y,z){
+		this.x=x;
+		this.y=y;
+		this.z=z;
+		this.add=function(o){
+			this.x+=o.x;
+			this.y+=o.y;
+			this.z+=o.z;
+		}
+		this.sub=function(o){
+			this.x-=o.x;
+			this.y-=o.y;
+			this.z-=o.z;
+		}
+		this.mult=function(o){
+			this.x*=o;
+			this.y*=o;
+			this.z*=o;
+		}
+		this.div=function(o){
+			this.x/=o;
+			this.y/=o;
+			this.z/=o;
+		}
+	}
+	this.Vec.add=function(a,b){
+		return new (Game.prototype.Vec)(a.x+b.x,a.y+b.y,a.z+b.z);
+	}
+	this.Vec.sub=function(a,b){
+		return new (Game.prototype.Vec)(a.x-b.x,a.y-b.y,a.z-b.z);
+	}
+	this.Vec.mult=function(a,b){
+		return new (Game.prototype.Vec)(a.x*b,a.y*b,a.z*b);
+	}
+	this.Vec.div=function(a,b){
+		return new (Game.prototype.Vec)(a.x/b,a.y/b,a.z/b);
+	}
 }
 document.body.innerHTML+=`<script src="/physics.js"></script>`
