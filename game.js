@@ -1,5 +1,5 @@
 var Game=function(ele){
-	var that=this;
+	window["game-"+ele.id]=this;
 	ele.innerHTML=`
 <canvas id="game-canvas-for-${ele.id}"></canvas>
 <textarea id="game-coding-area-for-${ele.id}"></textarea>
@@ -11,14 +11,14 @@ var Game=function(ele){
 	this.entity=function(pos,vel,mass,img){
 		this.id="Anonymous"
 		this.type="entity";
-		this.game=that;
+		this.game=window["game-"+ele.id];
 		this.pos=pos;
 		this.vel=vel;
 		this.mass=mass;
 		this.img=new Image();
 		this.img.src=img;
 		this.force=function(o){
-			this.vel.add(that.Vec.div(o,this.mass));
+			this.vel.add(window["game-"+ele.id].Vec.div(o,this.mass));
 		};
 		this.update=function(){
 			this.eval(this.behave);
@@ -41,7 +41,7 @@ var Game=function(ele){
 					Comment:
 					// [comments]
 				So you should say something like this:
-					hero nearestItem 5
+					hero findNearestItem 5
 					goto 3 if 5
 					hero move 5
 					goto 0 if 4
@@ -233,50 +233,49 @@ var Game=function(ele){
 		}
 	}
 	this.runButton.onclick=function(){
-		var th=that;
-		th.runningCode=th.code.split(";");
-		th.startTime=new Date().getTime();
-		th.run=setInterval(function(){
-			th.ctx.clearRect(0, 0, document.getElementById("game-canvas-for-"+ele.id).width, document.getElementById("game-canvas-for-"+ele.id).height);
-			th.codePointer++;
+		window["game-"+ele.id].runningCode=window["game-"+ele.id].code.split(";");
+		window["game-"+ele.id].startTime=new Date().getTime();
+		window["game-"+ele.id].run=setInterval(function(){
+			window["game-"+ele.id].ctx.clearRect(0, 0, document.getElementById("game-canvas-for-"+ele.id).width, document.getElementById("game-canvas-for-"+ele.id).height);
+			window["game-"+ele.id].codePointer++;
 			try{
-				th.eval(th.runningCode);
+				window["game-"+ele.id].eval(window["game-"+ele.id].runningCode);
 			}catch(e){
 				console.log(e);
 			}
-			for(let i in th.entities){
-				for(let j in th.entities){
+			for(let i in window["game-"+ele.id].entities){
+				for(let j in window["game-"+ele.id].entities){
 					if(i==j){
 						continue;
 					}
-					th.entities[i].force(Math.floor(Math.sqrt(
-						(th.entities[i].pos.x-th.entities[j].pos.x)*
-						(th.entities[i].pos.x-th.entities[j].pos.x)+
-						(th.entities[i].pos.y-th.entities[j].pos.y)*
-						(th.entities[i].pos.y-th.entities[j].pos.y)+
-						(th.entities[i].pos.z-th.entities[j].pos.z)*
-						(th.entities[i].pos.z-th.entities[j].pos.z)
+					window["game-"+ele.id].entities[i].force(Math.floor(Math.sqrt(
+						(window["game-"+ele.id].entities[i].pos.x-window["game-"+ele.id].entities[j].pos.x)*
+						(window["game-"+ele.id].entities[i].pos.x-window["game-"+ele.id].entities[j].pos.x)+
+						(window["game-"+ele.id].entities[i].pos.y-window["game-"+ele.id].entities[j].pos.y)*
+						(window["game-"+ele.id].entities[i].pos.y-window["game-"+ele.id].entities[j].pos.y)+
+						(window["game-"+ele.id].entities[i].pos.z-window["game-"+ele.id].entities[j].pos.z)*
+						(window["game-"+ele.id].entities[i].pos.z-window["game-"+ele.id].entities[j].pos.z)
 					)));
 				}
-				th.entities[i].update();
+				window["game-"+ele.id].entities[i].update();
 			}
 			let f=true;
-			for(let i in th.goals){
-				f=f&&th.goals[i][1]();
+			for(let i in window["game-"+ele.id].goals){
+				f=f&&window["game-"+ele.id].goals[i][1]();
 			}
 			if(f){
-				th.ctx.fillStyle= "purple";
-    				th.ctx.font = "50px Arial";
-				th.ctx.textAlign="center";
-    				th.ctx.fillText("You Won!", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
-				clearInterval(th.run);
+				window["game-"+ele.id].ctx.fillStyle= "purple";
+    				window["game-"+ele.id].ctx.font = "50px Arial";
+				window["game-"+ele.id].ctx.textAlign="center";
+    				window["game-"+ele.id].ctx.fillText("You Won!", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
+				clearInterval(window["game-"+ele.id].run);
 			}
-			if(th.startTime+120000>new Date().getTime()){
-				th.ctx.fillStyle= "purple";
-    				th.ctx.font = "50px Arial";
-				th.ctx.textAlign="center";
-    				th.ctx.fillText("Out Of Time", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
-				clearInterval(th.run);
+			if(window["game-"+ele.id].startTime+120000>new Date().getTime()){
+				window["game-"+ele.id].ctx.fillStyle= "purple";
+    				window["game-"+ele.id].ctx.font = "50px Arial";
+				window["game-"+ele.id].ctx.textAlign="center";
+    				window["game-"+ele.id].ctx.fillText("Out Of Time", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
+				clearInterval(window["game-"+ele.id].run);
 			}
 		},40);
 	};
@@ -293,7 +292,7 @@ var Game=function(ele){
 		this.entities.push(a);
 		return a;
 	};
-	setInterval("that.code.value=that.originalCode",10)
+	setInterval("window["game-"+ele.id].code.value=window["game-"+ele.id].originalCode",10)
 	this.Vec=function(x,y,z){
 		this.x=x;
 		this.y=y;
