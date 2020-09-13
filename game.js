@@ -29,6 +29,8 @@ var Game=function(ele){
 		};
 		this.codePointer=0;
 		this.eval=function(str){
+			console.log(str);
+			console.log(this.codePointer);
 			/*
 				A new coding lang called clc.
 				Syntax:
