@@ -296,7 +296,7 @@ var Game=function(ele){
 		this.entities.push(a);
 		return a;
 	};
-	setInterval("window['game-'+window.games].code.value=window['game-'+window.games].originalCode",10)
+	setTimeout("window['game-'+window.games].code.value=window['game-'+window.games].originalCode+''",10)
 	this.Vec=function(x,y,z){
 		this.x=x;
 		this.y=y;
