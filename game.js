@@ -30,6 +30,10 @@ var Game=function(ele){
 		};
 		this.codePointer=0;
 		this.eval=function(str){
+			if(!str[this.codePointer]){
+				console.log(this.id+":Code finished!")
+				return
+			}
 			/*
 				A new coding lang called clc.
 				Syntax:
@@ -178,8 +182,10 @@ var Game=function(ele){
 	this.player=null;
 	this.codePointer=0;
 	this.eval=function(str){
-		console.log(str);
-		console.log(this.codePointer);
+		if(!str[this.codePointer]){
+			console.log(this.id+":Code finished!")
+			return
+		}
 		/*
 			A new coding lang called clc.
 			Syntax:
