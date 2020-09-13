@@ -5,7 +5,7 @@ var Game=function(ele){
 	ele.innerHTML=`
 <canvas id="game-canvas-for-${ele.id}"></canvas>
 <textarea id="game-coding-area-for-${ele.id}"></textarea>
-<button id="game-run-button-for-${ele.id}"></button>
+<button id="game-run-button-for-${ele.id}">Run</button>
 `;
 	this.ctx=document.getElementById("game-canvas-for-"+ele.id).getContext("2d");
 	this.code=document.getElementById("game-coding-area-for-"+ele.id);
@@ -235,7 +235,7 @@ var Game=function(ele){
 		}
 	}
 	this.runButton.onclick=function(){
-		window["game-"+window.games].runningCode=window["game-"+window.games].code.split(";");
+		window["game-"+window.games].runningCode=window["game-"+window.games].code.value.split(";");
 		window["game-"+window.games].startTime=new Date().getTime();
 		window["game-"+window.games].run=setInterval(function(){
 			window["game-"+window.games].ctx.clearRect(0, 0, document.getElementById("game-canvas-for-"+window.games).width, document.getElementById("game-canvas-for-"+window.games).height);
