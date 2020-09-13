@@ -23,14 +23,13 @@ var Game=function(ele){
 			this.vel.add(window["game-"+window.games].Vec.div(o,this.mass));
 		};
 		this.update=function(){
-			this.eval(this.behave);
+			this.eval(this.behave.split("\n"));
+			this.codePointer++;
 			this.pos.add(this.vel);
 			this.game.ctx.drawImage(this.img,this.pos.x,this.pos.y-this.pos.z/10);
 		};
 		this.codePointer=0;
 		this.eval=function(str){
-			console.log(str);
-			console.log(this.codePointer);
 			/*
 				A new coding lang called clc.
 				Syntax:
@@ -179,6 +178,8 @@ var Game=function(ele){
 	this.player=null;
 	this.codePointer=0;
 	this.eval=function(str){
+		console.log(str);
+		console.log(this.codePointer);
 		/*
 			A new coding lang called clc.
 			Syntax:
