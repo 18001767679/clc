@@ -186,32 +186,6 @@ var Game=function(ele){
 			console.log(this.id+":Code finished!")
 			return
 		}
-		/*
-			A new coding lang called clc.
-			Syntax:
-				Do something:
-				<object> <do> [args]
-				Goto:
-				goto <line> if <line>
-				Plain data:
-				<data>
-				Arbitary JS:
-				comp <exp> <line>
-				Comment:
-				// [comments]
-			So you should say something like this:
-				hero nearestItem 5
-				goto 3 if 5
-				hero moveTo 5
-				goto 0 if 4
-				1
-				
-			That means:
-				while True:
-					item=hero.findNearestItem()
-					if item:
-						hero.moveTo(item)#?
-		*/
 		let line=function(l){
 			return str[l];
 		}
@@ -243,7 +217,7 @@ var Game=function(ele){
 		}
 	}
 	this.runButton.onclick=function(){
-		window["game-"+window.games].runningCode=window["game-"+window.games].code.value.split(";");
+		window["game-"+window.games].runningCode=window["game-"+window.games].code.value.split("\n");
 		window["game-"+window.games].startTime=new Date().getTime();
 		window["game-"+window.games].run=setInterval(function(){
 			window["game-"+window.games].ctx.clearRect(0, 0, document.getElementById("game-canvas-for-"+window.games).width, document.getElementById("game-canvas-for-"+window.games).height);
