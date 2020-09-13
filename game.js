@@ -171,7 +171,6 @@ var Game=function(ele){
 			this.health+=(this.maxHealth-this.health)/30;
 		};
 		this.behave=""
-		this.codePointer=0;
 	};
 	this.entities=[];
 	this.goals=[];
