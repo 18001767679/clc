@@ -10,6 +10,7 @@ var Game=function(ele){
 	this.runButton=document.getElementById("game-run-button-for-"+ele.id);
 	this.entity=function(pos,vel,mass,img){
 		this.id="Anonymous"
+		this.type="entity";
 		this.game=that;
 		this.pos=pos;
 		this.vel=vel;
@@ -42,7 +43,7 @@ var Game=function(ele){
 				So you should say something like this:
 					hero nearestItem 5
 					goto 3 if 5
-					hero moveTo 5
+					hero move 5
 					goto 0 if 4
 					1
 
@@ -87,6 +88,7 @@ var Game=function(ele){
 		this.attackRange=3;
 		this.cleaveDamage=115.7;
 		this.cleaveRange=10;
+		this.team="decoration"
 		this.moveXY=function(x,y){
 			let xo=(x-this.pos.x)/Math.sqrt((x-this.pos.x)*(x-this.pos.x)+(y-this.pos.y)*(x-this.pos.y))*this.maxSpeed;
 			let yo=(y-this.pos.y)/Math.sqrt((x-this.pos.x)*(x-this.pos.x)+(y-this.pos.y)*(x-this.pos.y))*this.maxSpeed;
@@ -101,6 +103,44 @@ var Game=function(ele){
 				this.vel.y=0;
 			}
 		};
+		this.findByTeam=function(t){
+			let f=[]
+			for(let i in this.game.entities){
+				if(this.game.entities[i].team===t){
+					f.push(this.game.entities[i])
+				}
+			}
+			return f
+		}
+		this.findItems=function(){
+			return this.findByTeam("collectable");
+		}
+		this.findEnemies=function(){
+			return this.findByTeam("ogres");
+		}
+		this.findFriends=function(){
+			return this.findByTeam("humans");
+		}
+		this.findByType=function(){
+			let f=[]
+			for(let i in this.game.entities){
+				if(this.game.entities[i].type===t){
+					f.push(this.game.entities[i])
+				}
+			}
+			return f
+		}
+		this.findNearest=function(l){
+			let minDist=9001;
+			let minE=null;
+			for(let i in l){
+				if(this.distanceTo(l[i])<minDist){
+					minDist=this.distanceTo(l[i]);
+					minE=l[i]
+				}
+			}
+			return minE
+		}
 		this.move=function(u){
 			var x=u.x;
 			var y=u.y;
@@ -186,7 +226,9 @@ var Game=function(ele){
 				let com=command.concat([])
 				com.shift();
 				com.shift();
-				eval(command[0]+"."+command[1]+"("+com.join()+")")
+				window.player=this.player;
+				eval("player."+command[1]+"("+com.join()+")");
+				delete window.player;
 				break;
 		}
 	}
