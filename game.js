@@ -279,7 +279,7 @@ var Game=function(ele){
     				window["game-"+window.games].ctx.fillText("Out Of Time", document.getElementById("game-canvas-for-"+window.games).width/2, document.getElementById("game-canvas-for-"+window.games).height/2);
 				clearInterval(window["game-"+window.games].run);
 			}
-		},40);
+		},100);
 	};
 	this.addGoal=function(t,f){
 		this.goals.push([t,f]);
