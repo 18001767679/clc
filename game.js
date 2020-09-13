@@ -20,10 +20,66 @@ var Game=function(ele){
 			this.vel.add(that.Vec.div(o,this.mass));
 		};
 		this.update=function(){
+			this.eval(this.behave);
 			this.pos.add(this.vel);
-			this.vel.mult(0.99);
 			this.game.ctx.drawImage(this.img,this.pos.x,this.pos.y-this.pos.z/10);
 		};
+		this.codePointer=0;
+		this.eval=function(str){
+			/*
+				A new coding lang called clc.
+				Syntax:
+					Do something:
+					<object> <do> [args]
+					Goto:
+					goto <line> if <line>
+					Plain data:
+					<data>
+					Arbitary JS:
+					comp <exp> <line>
+					Comment:
+					// [comments]
+				So you should say something like this:
+					hero nearestItem 5
+					goto 3 if 5
+					hero moveTo 5
+					goto 0 if 4
+					1
+
+				That means:
+					while True:
+						item=hero.findNearestItem()
+						if item:
+							hero.moveTo(item)#?
+			*/
+			let line=function(l){
+				return str[l];
+			}
+			let command=str[this.codePointer].split(" ");
+			switch(command[0]){
+				case "goto":
+					if(str[command[3]]==="1"){
+						this.codePointer=parseInt(command[1]);
+					}
+					break;
+				case "comp":
+					let a=eval(command[1])
+					if(a){
+						str[command[2]]=a;
+					}
+				case "//":
+					break;
+				default:
+					if(command.length===1){
+						break;
+					}
+					let com=command.concat([])
+					com.shift();
+					com.shift();
+					eval(command[0]+"."+command[1]+"("+com.join()+")")
+					break;
+			}
+		}
 		this.maxSpeed=10;
 		this.maxHealth=100;
 		this.health=this.maxHealth;
@@ -72,19 +128,77 @@ var Game=function(ele){
 		this.shield=function(){
 			this.health+=(this.maxHealth-this.health)/30;
 		};
+		this.behave=""
+		this.codePointer=0;
 	};
 	this.entities=[];
 	this.goals=[];
 	this.player=null;
 	this.codePointer=0;
+	this.eval=function(str){
+		/*
+			A new coding lang called clc.
+			Syntax:
+				Do something:
+				<object> <do> [args]
+				Goto:
+				goto <line> if <line>
+				Plain data:
+				<data>
+				Arbitary JS:
+				comp <exp> <line>
+				Comment:
+				// [comments]
+			So you should say something like this:
+				hero nearestItem 5
+				goto 3 if 5
+				hero moveTo 5
+				goto 0 if 4
+				1
+				
+			That means:
+				while True:
+					item=hero.findNearestItem()
+					if item:
+						hero.moveTo(item)#?
+		*/
+		let line=function(l){
+			return str[l];
+		}
+		let command=str[this.codePointer].split(" ");
+		switch(command[0]){
+			case "goto":
+				if(str[command[3]]==="1"){
+					this.codePointer=parseInt(command[1]);
+				}
+				break;
+			case "comp":
+				let a=eval(command[1])
+				if(a){
+					str[command[2]]=a;
+				}
+			case "//":
+				break;
+			default:
+				if(command.length===1){
+					break;
+				}
+				let com=command.concat([])
+				com.shift();
+				com.shift();
+				eval(command[0]+"."+command[1]+"("+com.join()+")")
+				break;
+		}
+	}
 	this.runButton.onclick=function(){
 		var th=that;
 		th.runningCode=th.code.split(";");
+		th.startTime=new Date().getTime();
 		th.run=setInterval(function(){
 			th.ctx.clearRect(0, 0, document.getElementById("game-canvas-for-"+ele.id).width, document.getElementById("game-canvas-for-"+ele.id).height);
 			th.codePointer++;
 			try{
-				eval("function(){return function(hero){"+th.runningCode[th.codePointer]+"}}")()(th.player);
+				th.eval(th.runningCode);
 			}catch(e){
 				console.log(e);
 			}
@@ -110,9 +224,16 @@ var Game=function(ele){
 			}
 			if(f){
 				th.ctx.fillStyle= "purple";
-    			th.ctx.font = "50px Arial";
+    				th.ctx.font = "50px Arial";
 				th.ctx.textAlign="center";
-    			th.ctx.fillText("You Won!", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
+    				th.ctx.fillText("You Won!", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
+				clearInterval(th.run);
+			}
+			if(th.startTime+120000>new Date().getTime()){
+				th.ctx.fillStyle= "purple";
+    				th.ctx.font = "50px Arial";
+				th.ctx.textAlign="center";
+    				th.ctx.fillText("Out Of Time", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
 				clearInterval(th.run);
 			}
 		},40);
