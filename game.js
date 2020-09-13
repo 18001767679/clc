@@ -1,5 +1,7 @@
+
 var Game=function(ele){
-	window["game-"+ele.id]=this;
+	window.games=(window.games||0)+1
+	window["game-"+window.games]=this;
 	ele.innerHTML=`
 <canvas id="game-canvas-for-${ele.id}"></canvas>
 <textarea id="game-coding-area-for-${ele.id}"></textarea>
@@ -11,14 +13,14 @@ var Game=function(ele){
 	this.entity=function(pos,vel,mass,img){
 		this.id="Anonymous"
 		this.type="entity";
-		this.game=window["game-"+ele.id];
+		this.game=window["game-"+window.games];
 		this.pos=pos;
 		this.vel=vel;
 		this.mass=mass;
 		this.img=new Image();
 		this.img.src=img;
 		this.force=function(o){
-			this.vel.add(window["game-"+ele.id].Vec.div(o,this.mass));
+			this.vel.add(window["game-"+window.games].Vec.div(o,this.mass));
 		};
 		this.update=function(){
 			this.eval(this.behave);
@@ -233,49 +235,49 @@ var Game=function(ele){
 		}
 	}
 	this.runButton.onclick=function(){
-		window["game-"+ele.id].runningCode=window["game-"+ele.id].code.split(";");
-		window["game-"+ele.id].startTime=new Date().getTime();
-		window["game-"+ele.id].run=setInterval(function(){
-			window["game-"+ele.id].ctx.clearRect(0, 0, document.getElementById("game-canvas-for-"+ele.id).width, document.getElementById("game-canvas-for-"+ele.id).height);
-			window["game-"+ele.id].codePointer++;
+		window["game-"+window.games].runningCode=window["game-"+window.games].code.split(";");
+		window["game-"+window.games].startTime=new Date().getTime();
+		window["game-"+window.games].run=setInterval(function(){
+			window["game-"+window.games].ctx.clearRect(0, 0, document.getElementById("game-canvas-for-"+window.games).width, document.getElementById("game-canvas-for-"+window.games).height);
+			window["game-"+window.games].codePointer++;
 			try{
-				window["game-"+ele.id].eval(window["game-"+ele.id].runningCode);
+				window["game-"+window.games].eval(window["game-"+window.games].runningCode);
 			}catch(e){
 				console.log(e);
 			}
-			for(let i in window["game-"+ele.id].entities){
-				for(let j in window["game-"+ele.id].entities){
+			for(let i in window["game-"+window.games].entities){
+				for(let j in window["game-"+window.games].entities){
 					if(i==j){
 						continue;
 					}
-					window["game-"+ele.id].entities[i].force(Math.floor(Math.sqrt(
-						(window["game-"+ele.id].entities[i].pos.x-window["game-"+ele.id].entities[j].pos.x)*
-						(window["game-"+ele.id].entities[i].pos.x-window["game-"+ele.id].entities[j].pos.x)+
-						(window["game-"+ele.id].entities[i].pos.y-window["game-"+ele.id].entities[j].pos.y)*
-						(window["game-"+ele.id].entities[i].pos.y-window["game-"+ele.id].entities[j].pos.y)+
-						(window["game-"+ele.id].entities[i].pos.z-window["game-"+ele.id].entities[j].pos.z)*
-						(window["game-"+ele.id].entities[i].pos.z-window["game-"+ele.id].entities[j].pos.z)
+					window["game-"+window.games].entities[i].force(Math.floor(Math.sqrt(
+						(window["game-"+window.games].entities[i].pos.x-window["game-"+window.games].entities[j].pos.x)*
+						(window["game-"+window.games].entities[i].pos.x-window["game-"+window.games].entities[j].pos.x)+
+						(window["game-"+window.games].entities[i].pos.y-window["game-"+window.games].entities[j].pos.y)*
+						(window["game-"+window.games].entities[i].pos.y-window["game-"+window.games].entities[j].pos.y)+
+						(window["game-"+window.games].entities[i].pos.z-window["game-"+window.games].entities[j].pos.z)*
+						(window["game-"+window.games].entities[i].pos.z-window["game-"+window.games].entities[j].pos.z)
 					)));
 				}
-				window["game-"+ele.id].entities[i].update();
+				window["game-"+window.games].entities[i].update();
 			}
 			let f=true;
-			for(let i in window["game-"+ele.id].goals){
-				f=f&&window["game-"+ele.id].goals[i][1]();
+			for(let i in window["game-"+window.games].goals){
+				f=f&&window["game-"+window.games].goals[i][1]();
 			}
 			if(f){
-				window["game-"+ele.id].ctx.fillStyle= "purple";
-    				window["game-"+ele.id].ctx.font = "50px Arial";
-				window["game-"+ele.id].ctx.textAlign="center";
-    				window["game-"+ele.id].ctx.fillText("You Won!", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
-				clearInterval(window["game-"+ele.id].run);
+				window["game-"+window.games].ctx.fillStyle= "purple";
+    				window["game-"+window.games].ctx.font = "50px Arial";
+				window["game-"+window.games].ctx.textAlign="center";
+    				window["game-"+window.games].ctx.fillText("You Won!", document.getElementById("game-canvas-for-"+window.games).width/2, document.getElementById("game-canvas-for-"+window.games).height/2);
+				clearInterval(window["game-"+window.games].run);
 			}
-			if(window["game-"+ele.id].startTime+120000>new Date().getTime()){
-				window["game-"+ele.id].ctx.fillStyle= "purple";
-    				window["game-"+ele.id].ctx.font = "50px Arial";
-				window["game-"+ele.id].ctx.textAlign="center";
-    				window["game-"+ele.id].ctx.fillText("Out Of Time", document.getElementById("game-canvas-for-"+ele.id).width/2, document.getElementById("game-canvas-for-"+ele.id).height/2);
-				clearInterval(window["game-"+ele.id].run);
+			if(window["game-"+window.games].startTime+120000>new Date().getTime()){
+				window["game-"+window.games].ctx.fillStyle= "purple";
+    				window["game-"+window.games].ctx.font = "50px Arial";
+				window["game-"+window.games].ctx.textAlign="center";
+    				window["game-"+window.games].ctx.fillText("Out Of Time", document.getElementById("game-canvas-for-"+window.games).width/2, document.getElementById("game-canvas-for-"+window.games).height/2);
+				clearInterval(window["game-"+window.games].run);
 			}
 		},40);
 	};
@@ -292,7 +294,7 @@ var Game=function(ele){
 		this.entities.push(a);
 		return a;
 	};
-	setInterval("window['game-'+ele.id].code.value=window['game-'+ele.id].originalCode",10)
+	setInterval("window['game-'+window.games].code.value=window['game-'+window.games].originalCode",10)
 	this.Vec=function(x,y,z){
 		this.x=x;
 		this.y=y;
