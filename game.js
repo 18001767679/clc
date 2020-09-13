@@ -332,4 +332,4 @@ var Game=function(ele){
 		return new (Game.prototype.Vec)(a.x/b,a.y/b,a.z/b);
 	}
 }
-document.body.innerHTML+=`<script src="/physics.js"></script>`
+
