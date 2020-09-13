@@ -3,7 +3,7 @@ var Game=function(ele){
 	window.games=(window.games||0)+1
 	window["game-"+window.games]=this;
 	ele.innerHTML=`
-<canvas id="game-canvas-for-${window.games}"></canvas>
+<canvas id="game-canvas-for-${window.games}" background="/assets/bg.png"></canvas>
 <textarea id="game-coding-area-for-${window.games}"></textarea>
 <button id="game-run-button-for-${window.games}">Run</button>
 `;
@@ -232,14 +232,16 @@ var Game=function(ele){
 					if(i==j){
 						continue;
 					}
-					window["game-"+window.games].entities[i].force(Math.floor(Math.sqrt(
-						(window["game-"+window.games].entities[i].pos.x-window["game-"+window.games].entities[j].pos.x)*
-						(window["game-"+window.games].entities[i].pos.x-window["game-"+window.games].entities[j].pos.x)+
-						(window["game-"+window.games].entities[i].pos.y-window["game-"+window.games].entities[j].pos.y)*
-						(window["game-"+window.games].entities[i].pos.y-window["game-"+window.games].entities[j].pos.y)+
-						(window["game-"+window.games].entities[i].pos.z-window["game-"+window.games].entities[j].pos.z)*
-						(window["game-"+window.games].entities[i].pos.z-window["game-"+window.games].entities[j].pos.z)
-					)));
+					if(i.type!="decoration"&&j.type!="decoration"){//Decorations dont bump.
+						window["game-"+window.games].entities[i].force(Math.floor(Math.sqrt(
+							(window["game-"+window.games].entities[i].pos.x-window["game-"+window.games].entities[j].pos.x)*
+							(window["game-"+window.games].entities[i].pos.x-window["game-"+window.games].entities[j].pos.x)+
+							(window["game-"+window.games].entities[i].pos.y-window["game-"+window.games].entities[j].pos.y)*
+							(window["game-"+window.games].entities[i].pos.y-window["game-"+window.games].entities[j].pos.y)+
+							(window["game-"+window.games].entities[i].pos.z-window["game-"+window.games].entities[j].pos.z)*
+							(window["game-"+window.games].entities[i].pos.z-window["game-"+window.games].entities[j].pos.z)
+						)));
+					}
 				}
 				window["game-"+window.games].entities[i].update();
 			}
