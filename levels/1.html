@@ -11,11 +11,12 @@
     <script>
 		onload=function(){
 			game=new Game(document.getElementById("game"));
-			game.originalCode="// Welcome to clc!Hit the Run button and see the hero run!\nhero moveXY 50 60";
+			game.originalCode="// Welcome to clc!Hit the Run button and see the hero run!\nhero moveRight";
 			game.addGoal("Go to the red X",function(){return game.player.x===50&&game.player.y===60});
 			game.spawnXY("red-cross",50,60);
 			game.spawnPlayer(50,50);
 			game.player.moveRight=function(steps){
+				steps=steps ?? 1;
 				this.moveXY(this.pos.x+steps,this.pos.y);
 			}
 		}
