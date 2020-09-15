@@ -1,0 +1,6 @@
+{
+	"hero.moveRight":"hero.moveRight(X):Moves the hero right X steps.",
+	"hero.moveLeft":"hero.moveRight(X):Moves the hero left X steps.",
+	"hero.moveUp":"hero.moveRight(X):Moves the hero up X steps.",
+	"hero.moveDown":"hero.moveRight(X):Moves the hero down X steps.",
+}
