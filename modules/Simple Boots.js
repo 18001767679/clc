@@ -1,0 +1,20 @@
+var ext = function(entity){
+	with(entity){
+		var moveRight = function(steps){
+			steps = steps ?? 1;
+			this.moveXY(this.pos.x + steps, this.pos.y);
+		};
+		var moveLeft = function(steps){
+			steps = steps ?? 1;
+			this.moveXY(this.pos.x - steps, this.pos.y);
+		};
+		var moveUp = function(steps){
+			steps = steps ?? 1;
+			this.moveXY(this.pos.x, this.pos.y + steps);
+		};
+		var moveDown = function(steps){
+			steps = steps ?? 1;
+			this.moveXY(this.pos.x, this.pos.y - steps);
+		};
+	}
+};
