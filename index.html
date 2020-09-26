@@ -22,7 +22,7 @@
             let req=new XMLHttpRequest();
             req.open("GET","levels/"+location.hash.split("#")[1]+".clc",false);
             req.send();
-            document.body.innerHTML=`<!DOCTYPE html><html><head><title>Level 1</title><script src="/clc/game.js"></script></head><body><div id="game"></div></body><script>${req.responseText}</script></html>`
+            document.body.innerHTML=`<!DOCTYPE html><html><head><title>Level 1</title><script src="/clc/game.js"><\/script></head><body><div id="game"></div></body><script>${req.responseText}</script></html>`
         }
     </script>
 </html>
