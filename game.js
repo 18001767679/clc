@@ -8,6 +8,13 @@ var CLC = {
         this.mass = mass;
         this.img = new Image();
         this.img.src = img;
+        this.load=function(item){
+            let req=new XMLHttpRequest();
+			req.open("GET","modules/"+item+".ext",false);
+			req.send();
+			eval(req.responseText);
+			window.ext(this);
+        }
         this.force = function(o) {
             this.vel.add(CLC.Vec.div(o, this.mass));
         };
