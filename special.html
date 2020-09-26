@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>List of levels</title> 
+    </head>
+    <body>
+        List of levels:
+        <ul id="ul">
+        
+        </ul>
+    </body>
+ 
+    <script>
+        var a=1;
+        for (var i=1;i<=a;i++){
+            document.getElementById("ul").innerHTML+="<li><a href='javascript:void(level("+i+"))'>Level "+i+"</a></li>";
+        }
+        function level(i){
+            location.href="18001767679.github.io/clc/index.html#"+i;
+        }
+        if(location.search){
+            let req=new XMLHttpRequest();
+            req.open("GET","levels/"+location.search.split("=")[1]+".clc",false);
+            req.send();
+            document.body.innerHTML=`<!DOCTYPE html><html><head><title>Level 1</title><script src="/clc/game.js"></script></head><body><div id="game"></div></body><script>${req.responseText}</script></html>`
+        }
+    </script>
+</html>
