@@ -1,0 +1,6 @@
+game=new Game(document.getElementById("game"));
+game.originalCode="// More long roads.";
+game.addGoal("Go to the red X",function(){return game.player.x===100&&game.player.y===100});
+game.spawnXY("red-cross",100,100);
+game.spawnPlayer(0,0);
+game.player.load("Simple Boots");
