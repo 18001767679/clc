@@ -1,0 +1,9 @@
+game=new Game(document.getElementById("game"));
+game.originalCode="// Oh no!A munchkin!Attack it!\nhero.attack(enemy);";
+game.addGoal("Go to the red X",function(){return game.player.x===50&&game.player.y===60});
+game.spawnXY("red-cross",50,60);
+enemy=game.spawnXY("munchkin",50,55);
+enemy.attackDamage=40;
+hero=game.spawnPlayer(50,50);
+hero.attackDamage=1000000;
+game.player.load("Simple Boots");
