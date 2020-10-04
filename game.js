@@ -116,7 +116,7 @@ var CLC = {
         this.behave = ""
     },
     Game: function(ele) {
-        ele.innerHTML = `<canvas id="game-canvas-for-${ele.id}" background="/assets/bg.png"></canvas><textarea id="game-coding-area-for-${ele.id}"></textarea><button id="game-run-button-for-${ele.id}">Run</button>`;
+        ele.innerHTML = `<canvas id="game-canvas-for-${ele.id}" background="/assets/bg.png"></canvas><textarea id="game-coding-area-for-${ele.id}"></textarea><button id="game-run-button-for-${ele.id}">Run</button><div id="game-goals-div-for-${ele.id}"></div>`;
         this.ctx = document.getElementById("game-canvas-for-" + ele.id).getContext("2d");
         this.canvas = document.getElementById("game-canvas-for-" + ele.id);
         this.code = document.getElementById("game-coding-area-for-" + ele.id);
