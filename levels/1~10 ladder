@@ -1,6 +1,5 @@
-var team=location.search.split("=")[1].replace("&opponent","");
 var _opponent=new XMLHttpRequest();
-_opponent.open("GET","https://database-simple-18001767679.glitch.me/get?file=clc%2Fmultiplayer%2F1~10%2F"+location.search.split("=")[2],false);
+_opponent.open("GET","https://database-simple-18001767679.glitch.me/get?file=clc%2Fmultiplayer%2F1~10%2F"+location.search.split("=")[1],false);
 _opponent.send();
 opponent=game.spawnXY("brawler",0,55);
 opponent.behave=_opponent.responseText;
