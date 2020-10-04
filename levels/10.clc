@@ -1,0 +1,13 @@
+game=new Game(document.getElementById("game"));
+game.originalCode="// There's a big boss in the middle!Use a while loop to defeat it.\nvar enemy=hero.findNearest(hero.findEnemies());hero.attack(enemy)";
+game.addGoal("Defeat the boss",function(){return enemy.health<=0});
+enemy=game.spawnXY("ogre",0,55);
+enemy.attackDamage=0;
+enemy.behave=function(){
+	while(1){
+		game.spawnXY("munchkin",0,55);
+	}
+}
+hero=game.spawnPlayer(50,50);
+hero.attackDamage=100;
+game.player.load("Simple Boots");
