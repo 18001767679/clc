@@ -1,0 +1,11 @@
+game=new Game(document.getElementById("game"));
+game.originalCode="// "enemy" in your code is a variable.We defined it for you already.Now you should define it using "var enemy=hero.findNearest(hero.findEnemies)".\nhero.attack(enemy);";
+game.addGoal("Go to the red X",function(){return game.player.x===50&&game.player.y===60});
+game.spawnXY("red-cross",50,60);
+{
+let enemy=game.spawnXY("munchkin",50,55);
+enemy.attackDamage=40;
+}//block to prevent player hacking
+hero=game.spawnPlayer(50,50);
+hero.attackDamage=1000000;
+game.player.load("Simple Boots");
