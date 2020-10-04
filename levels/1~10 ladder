@@ -1,0 +1,17 @@
+var team=location.search.split("=")[1].replace("&opponent","");
+var _opponent=new XMLHttpRequest();
+_opponent.open("GET","https://database-simple-18001767679.glitch.me/get?file=clc%2Fmultiplayer%2F1~10%2F"+location.search.split("=")[2],false);
+_opponent.send();
+game=new Game(document.getElementById("game"));
+game.originalCode="// This is a multiplayer level.The goal is to survive as long as you can.\nvar enemy=hero.findNearest(hero.findEnemies());hero.attack(enemy)";
+game.addGoal("Survive longer",function(){return hero.health>0&&opponent.health<=0});
+enemy=game.spawnXY("ogre",0,55);
+enemy.attackDamage=0;
+enemy.behave=function(){
+	while(1){
+		game.spawnXY("munchkin",0,55);
+	}
+}
+hero=game.spawnPlayer(50,50);
+hero.attackDamage=100;
+game.player.load("Simple Boots");
