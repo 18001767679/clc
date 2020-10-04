@@ -1,0 +1,6 @@
+game=new Game(document.getElementById("game"));
+game.originalCode="// Use hero.moveRight to move right and hero.moveDown to move down etc.\nhero.moveRight();";
+game.addGoal("Go to the red X",function(){return game.player.x===50&&game.player.y===60});
+game.spawnXY("red-cross",50,60);
+game.spawnPlayer(30,50);
+game.player.load("Simple Boots");
