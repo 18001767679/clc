@@ -1,0 +1,32 @@
+var _opponent=new XMLHttpRequest();
+_opponent.open("GET","https://database-simple-18001767679.glitch.me/get?file=clc%2Fchain%2F1~10%2F"+location.search.split("=")[2],false);
+_opponent.send();
+var _exp=new XMLHttpRequest();
+_exp.open("GET","https://database-simple-18001767679.glitch.me/get?file=clc%2Fchain%2F1~10%2F"+location.search.split("=")[2]+"lvl",false);
+_exp.send();
+game=new Game(document.getElementById("game"));
+game.originalCode=_opponent.responseText||"// This is a chain level.The goal is to survive 30 seconds.If you succeed,you can still play this level and it will be harder.";
+var ccc=new Date().getTime();
+game.addGoal("Survive 30s",
+function(){
+	if(hero.health>0&&ccc+30<new Date().getTime()){
+		var code=new XMLHttpRequest();
+		code.open("GET","https://database-simple-18001767679.glitch.me/post?file=clc%2Fchain%2F1~10%2F"+location.search.split("=")[2]+"&content="+game.player.behave,false);
+		code.send();
+		return True
+	}
+);
+enemy=game.spawnXY("ogre",0,55);
+enemy.attackDamage=0;
+enemy.behave=function(){
+	this.waves=1;
+	setInterval(function(){
+		for(let i in new Array(this.waves)){
+			game.spawnXY("munchkin",0,55).maxHealth=parseInt(_exp.responseText)*10;
+		}
+		this.waves++;
+	},10000/parseInt(_exp.responseText));
+};
+hero=game.spawnPlayer(50,50);
+hero.attackDamage=100;
+game.player.load("Simple Boots");
